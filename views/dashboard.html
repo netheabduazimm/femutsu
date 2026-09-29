@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Femutsu Dashboard</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <!-- Same fonts as Femutsu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Unbounded:wght@500;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+
+<body>
+
+
+    <div class="dashboard">
+
+
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+
+            <div class="dashboard-logo">
+                Femutsu<span>.</span>
+            </div>
+
+
+            <nav class="dashboard-nav">
+
+                <a href="#" class="active">
+                    <span class="nav-icon">👥</span>
+                    <span>Users</span>
+                </a>
+
+
+                <a href="#">
+                    <span class="nav-icon">🛡️</span>
+                    <span>Roles</span>
+                </a>
+
+
+                <a href="#">
+                    <span class="nav-icon">✨</span>
+                    <span>Titles</span>
+                </a>
+
+
+                <a href="#">
+                    <span class="nav-icon">📜</span>
+                    <span>Logs</span>
+                </a>
+
+
+                <a href="#">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+
+
+            </nav>
+
+
+        </aside>
+
+
+
+
+
+        <!-- Main content -->
+        <main class="dashboard-main">
+
+
+            <div class="dashboard-content">
+
+
+                <header class="dashboard-header">
+
+                    <div>
+                        <h1 class="dashboard-title">
+                            Dashboard
+                        </h1>
+
+                        <p class="dashboard-subtitle">
+                            Manage Femutsu users and permissions
+                        </p>
+                    </div>
+
+
+                    <button class="dashboard-btn" id="addUserBtn">
+                        + Add User
+                    </button>
+
+                </header>
+
+
+
+
+
+                <!-- Statistics -->
+
+                <section class="dashboard-stats">
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-label">
+                            Total Users
+                        </span>
+
+                        <strong class="stat-value" id="statTotalUsers">
+                            0
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-label">
+                            Developers
+                        </span>
+
+                        <strong class="stat-value" id="statDevelopers">
+                            0
+                        </strong>
+
+                    </div>
+
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-label">
+                            Supporters
+                        </span>
+
+                        <strong class="stat-value" id="statSupporters">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </section>
+
+
+
+
+
+
+                <!-- Users -->
+
+                <section class="dashboard-panel">
+
+
+                    <div class="panel-head">
+                        <h2 class="panel-title">
+                            Recent Users
+                        </h2>
+
+                        <div class="panel-search">
+                            <input type="text" id="userSearch" placeholder="Search users…">
+                        </div>
+                    </div>
+
+
+
+                    <div class="table-scroll">
+                    <table class="user-table">
+
+
+                        <thead>
+
+                            <tr>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Title</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody id="users">
+                            <!-- rows injected by dashboard.js -->
+                        </tbody>
+
+
+                    </table>
+                    </div>
+
+
+
+                </section>
+
+
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+    <script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

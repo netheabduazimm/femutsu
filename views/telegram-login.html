@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Logging in...</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <p>Logging in...</p>
+
+    <script>
+        const otp = new URLSearchParams(window.location.search).get("otp");
+
+        if (!otp) {
+            location.href = "/login";
+        }
+
+        fetch(`/api/auth/telegram?otp=${otp}`)
+            .then(res => res.json())
+            .then(data => {
+
+                if (!data.success) {
+                    alert(data.message);
+                    location.href = "/login";
+                    return;
+                }
+
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
+                );
+
+                location.href = "/";
+            })
+            .catch(() => {
+                location.href = "/login";
+            });
+    </script>
+
+</body>
+
+</html>

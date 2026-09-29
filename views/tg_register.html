@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Femutsu telegram</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ===== Design tokens ===== */
+        :root {
+            --bg: #0d0e16;
+            --bg-soft: #12141f;
+            --surface: #171926;
+            --surface-2: #1e2133;
+            --border: #2a2d40;
+            --text: #f1f2f7;
+            --text-dim: #9396ad;
+            --text-faint: #5b5e75;
+
+            --accent: #ff3d71;
+            --accent-ink: #2a0413;
+            --accent-2: #7c5cff;
+            --accent-teal: #2bd9c9;
+
+            --grad-aurora:
+                radial-gradient(60% 60% at 20% 20%, rgba(255, 61, 113, .35), transparent 60%),
+                radial-gradient(50% 50% at 85% 15%, rgba(124, 92, 255, .30), transparent 60%),
+                radial-gradient(60% 60% at 60% 90%, rgba(43, 217, 201, .16), transparent 60%);
+
+            --radius-card: 14px;
+            --radius-pill: 999px;
+
+            --font-display: 'Unbounded', system-ui, sans-serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+
+            --container: 1240px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Aurora backdrop, fixed so it doesn't reflow on mobile */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: var(--grad-aurora), var(--bg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* subtle grain/noise-free vignette to keep contrast on edges */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(120% 90% at 50% 0%, transparent 40%, var(--bg) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ===== Header ===== */
+        .topbar {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            max-width: var(--container);
+            margin: 0 auto;
+            width: 100%;
+            padding: clamp(18px, 3vw, 32px) clamp(20px, 4vw, 40px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--accent), #c21f52);
+            position: relative;
+            flex: 0 0 auto;
+            box-shadow: 0 6px 20px -6px rgba(255, 61, 113, .55);
+        }
+
+        .brand-mark::before,
+        .brand-mark::after {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, .85);
+        }
+
+        .brand-mark::before {
+            /* diagonal slash */
+            left: 6px;
+            right: 6px;
+            top: 50%;
+            height: 2px;
+            transform: translateY(-50%) rotate(-38deg);
+        }
+
+        .brand-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: .04em;
+            font-size: 19px;
+            color: var(--text);
+        }
+
+        /* ===== Main / centering ===== */
+        main {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(24px, 6vw, 60px) 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 460px;
+            text-align: center;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+
+        .eyebrow .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-teal);
+            box-shadow: 0 0 8px var(--accent-teal);
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: clamp(28px, 5vw, 38px);
+            line-height: 1.15;
+            margin: 0 0 14px;
+            letter-spacing: -0.01em;
+        }
+
+        .subtext {
+            color: var(--text-dim);
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 34px;
+            max-width: 360px;
+            margin-inline: auto;
+        }
+
+        .subtext .bot-handle {
+            color: var(--text);
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-color: var(--accent);
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1.5px;
+        }
+
+        /* ===== OTP inputs ===== */
+        .otp-row {
+            display: flex;
+            justify-content: center;
+            gap: clamp(8px, 2.4vw, 14px);
+            margin-bottom: 28px;
+        }
+
+        .otp-box {
+            width: clamp(42px, 12vw, 58px);
+            height: clamp(50px, 14vw, 66px);
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            font-family: var(--font-display);
+            font-size: clamp(18px, 4.4vw, 22px);
+            text-align: center;
+            outline: none;
+            transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+            caret-color: var(--accent);
+        }
+
+        .otp-box:hover {
+            border-color: #3a3d55;
+        }
+
+        .otp-box:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(255, 61, 113, .16);
+            transform: translateY(-1px);
+        }
+
+        .otp-box.filled {
+            border-color: var(--accent-2);
+        }
+
+        .otp-box.error {
+            border-color: var(--accent);
+            animation: shake .32s ease;
+        }
+
+        @keyframes shake {
+            25% {
+                transform: translateX(-4px);
+            }
+
+            75% {
+                transform: translateX(4px);
+            }
+        }
+
+        .status-line {
+            min-height: 20px;
+            font-size: 13px;
+            color: var(--text-faint);
+            margin-bottom: 26px;
+        }
+
+        .status-line.visible {
+            color: var(--accent-teal);
+        }
+
+        .verify-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px 20px;
+            border-radius: var(--radius-pill);
+            border: none;
+            background: linear-gradient(135deg, var(--accent), #d62861);
+            color: #fff;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: .01em;
+            cursor: pointer;
+            box-shadow: 0 12px 28px -12px rgba(255, 61, 113, .55);
+            transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+            margin-bottom: 18px;
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px -12px rgba(255, 61, 113, .65);
+        }
+
+        .verify-btn:active {
+            transform: translateY(0);
+        }
+
+        .verify-btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .verify-btn:focus-visible,
+        .otp-box:focus-visible,
+        .resend-link:focus-visible,
+        .brand:focus-visible {
+            outline: 2px solid var(--accent-teal);
+            outline-offset: 3px;
+        }
+
+        .resend-link {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            transition: color .15s ease, text-decoration-color .15s ease;
+        }
+
+        .resend-link:hover {
+            color: var(--text);
+            text-decoration-color: var(--text-dim);
+        }
+
+        .resend-link:disabled {
+            cursor: default;
+            color: var(--text-faint);
+            text-decoration: none;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 22px 20px clamp(24px, 5vw, 40px);
+            font-size: 12.5px;
+            color: var(--text-faint);
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 2px;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        /* ===== Reduced motion ===== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* ===== Small mobile tightening ===== */
+        @media (max-width: 380px) {
+            .otp-row {
+                gap: 6px;
+            }
+
+            .otp-box {
+                width: 40px;
+                height: 48px;
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <main>
+        <div class="card">
+            <h1>Telegram kodini kiriting</h1>
+            <p class="subtext">
+                <a href="https://t.me/femutsuregisterbot" class="bot-handle" target="_blank"
+                    rel="noopener">@femutsuregister</a>
+                botimizni oching va bir martalik kodingizga ega bo'ling.
+            </p>
+
+            <form id="otpForm" novalidate>
+                <div class="otp-row" role="group" aria-label="6-digit login code">
+                    <input class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1"
+                        autocomplete="one-time-code" aria-label="Digit 1" required>
+                    <input class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 2"
+                        required>
+                    <input class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 3"
+                        required>
+                    <input class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 4"
+                        required>
+                    <input class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 5"
+                        required>
+                    <input class="otp-box" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 6"
+                        required>
+                </div>
+
+                <p class="status-line" id="statusLine" aria-live="polite"></p>
+
+                <button class="verify-btn" type="submit" id="verifyBtn" disabled>Tasdiqlash &amp; davom etish</button>
+            </form>
+
+            <button class="resend-link" id="resendBtn" type="button">Kodni qayta olishgacha <span
+                    id="timer">30</span>soniya</button>
+        </div>
+    </main>
+
+    <!-- <footer>
+        By continuing you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+    </footer> -->
+
+    <script>
+        const boxes = Array.from(document.querySelectorAll('.otp-box'));
+        const verifyBtn = document.getElementById('verifyBtn');
+        const statusLine = document.getElementById('statusLine');
+        const resendBtn = document.getElementById('resendBtn');
+        const timerEl = document.getElementById('timer');
+        const form = document.getElementById('otpForm');
+
+        function updateVerifyState() {
+            const filled = boxes.every(b => b.value.length === 1);
+            verifyBtn.disabled = !filled;
+        }
+
+        boxes.forEach((box, i) => {
+            box.addEventListener('input', () => {
+                box.value = box.value.replace(/[^0-9]/g, '');
+                box.classList.toggle('filled', box.value.length === 1);
+                if (box.value && i < boxes.length - 1) boxes[i + 1].focus();
+                updateVerifyState();
+            });
+
+            box.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !box.value && i > 0) {
+                    boxes[i - 1].focus();
+                }
+            });
+
+            box.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const digits = (e.clipboardData.getData('text') || '').replace(/[^0-9]/g, '').split('');
+                digits.forEach((d, idx) => {
+                    if (boxes[i + idx]) {
+                        boxes[i + idx].value = d;
+                        boxes[i + idx].classList.add('filled');
+                    }
+                });
+                const next = boxes[Math.min(i + digits.length, boxes.length - 1)];
+                next.focus();
+                updateVerifyState();
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const code = boxes.map(b => b.value).join('');
+
+            statusLine.textContent = 'Tekshirilmoqda...';
+            statusLine.classList.remove('visible');
+
+            verifyBtn.disabled = true;
+
+
+            try {
+
+                const response = await fetch(
+                    "/api/auth/telegram/verify",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            code: code
+                        })
+                    }
+                );
+
+
+                const data = await response.json();
+
+
+                if (data.success) {
+
+                    statusLine.textContent =
+                        "Kod tasdiqlandi. Xush kelibsiz!";
+
+                    statusLine.classList.add("visible");
+
+
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(data.user)
+                    );
+
+
+                    setTimeout(() => {
+
+                        window.location.href = "/";
+
+                    }, 1000);
+
+                }
+                else {
+
+
+                    statusLine.textContent =
+                        data.error || "Kod noto'g'ri";
+
+
+                    boxes.forEach(box => {
+                        box.classList.add("error");
+                    });
+
+
+                    verifyBtn.disabled = false;
+
+                }
+
+
+
+            }
+            catch (error) {
+
+
+                console.error(error);
+
+
+                statusLine.textContent =
+                    "Server bilan aloqa yo'q";
+
+
+                verifyBtn.disabled = false;
+
+            }
+
+        });
+        // Resend timer
+        let seconds = 30;
+        resendBtn.disabled = true;
+        const countdown = setInterval(() => {
+            seconds -= 1;
+            timerEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                resendBtn.disabled = false;
+                resendBtn.textContent = 'Resend code';
+            }
+        }, 1000);
+
+        resendBtn.addEventListener('click', () => {
+            if (resendBtn.disabled) return;
+            resendBtn.disabled = true;
+            seconds = 30;
+            resendBtn.innerHTML = 'Resend code in <span id="timer">30</span>s';
+            const t = document.getElementById('timer');
+            const c2 = setInterval(() => {
+                seconds -= 1;
+                t.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(c2);
+                    resendBtn.disabled = false;
+                    resendBtn.textContent = 'Resend code';
+                }
+            }, 1000);
+        });
+
+        boxes[0].focus();
+    </script>
+</body>
+
+</html>

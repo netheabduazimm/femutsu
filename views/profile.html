@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="wrap">
+
+        <a href="/" class="logo">
+            <img src="/assets/logo.png" alt="Femutsu logo" class="logo-img">
+            <span class="logo-text">Femutsu</span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#" class="active">Anime</a>
+            <a href="#">Ongoing</a>
+            <a href="#">Bizning jamoa</a>
+        </nav>
+
+        <div class="header-actions">
+
+            <a href="/login" class="btn-signin" id="authButton">
+
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                    <path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+                </svg>
+
+                <span class="label">Kirish</span>
+
+            </a>
+
+
+            <div class="func_buts">
+
+                <button class="icon-btn">
+
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="7"
+                        stroke="currentColor"
+                        stroke-width="2"/>
+                        <path d="M21 21l-4.3-4.3"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"/>
+                    </svg>
+
+                </button>
+
+
+                <button class="icon-btn">
+
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="4"
+                        stroke="currentColor"
+                        stroke-width="2"/>
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <button class="hamburger" id="hamburgerBtn">
+
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 7h16M4 12h16M4 17h16"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"/>
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#">Anime</a>
+        <a href="#">Ongoing</a>
+        <a href="#">Bizning jamoa</a>
+    </nav>
+
+</header>
+
+
+
+<main class="profile-page">
+
+<div class="wrap">
+
+
+<section class="profile-card">
+
+
+<div class="profile-top">
+
+
+<img id="avatar"
+class="profile-avatar"
+src="/assets/default-avatar.svg">
+
+
+<div class="profile-info">
+
+
+<h1 id="name">
+Yuklanmoqda...
+</h1>
+
+
+<div id="roles" class="profile-roles"></div>
+
+
+
+<div class="profile-meta">
+
+
+<div>
+<span>Sizning ID</span>
+<strong id="telegram"></strong>
+</div>
+
+
+
+<div>
+<span>Qo'shilgan sana</span>
+<strong id="date"></strong>
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+<div class="profile-grid">
+
+
+
+<section class="profile-box">
+
+
+<div class="box-header">
+<h2>Yoqtirgan animelar</h2>
+</div>
+
+
+<div class="anime-placeholder">
+Bu bo'lim hali ishlab chiqilmoqda
+</div>
+
+
+</section>
+
+
+
+
+
+<section class="profile-box">
+
+
+<div class="box-header">
+<h2>Saqlangan animelar</h2>
+</div>
+
+
+<div class="anime-placeholder">
+Bu bo'lim hali ishlab chiqilmoqda
+</div>
+
+
+</section>
+
+
+
+</div>
+
+
+
+
+
+<section class="profile-box comments-box">
+
+
+<div class="box-header">
+<h2>Izohlar</h2>
+</div>
+
+
+<div class="anime-placeholder">
+Izohlar ishlab chiqilmoqda
+</div>
+
+
+</section>
+
+
+
+</div>
+
+</main>
+
+
+
+
+<script src="/js/app.js"></script>
+
+
+<script>
+
+
+const id = location.pathname.split("/")[2];
+
+
+fetch(`/api/user/${id}`)
+
+.then(res => res.json())
+
+.then(user => {
+
+
+const avatar = document.getElementById("avatar");
+const avatarUrl = user.photo_url || user.photo || user.profile_photo || "/assets/default-avatar.svg";
+
+avatar.src = avatarUrl;
+avatar.onerror = () => {
+avatar.src = "/assets/default-avatar.svg";
+};
+
+
+document.getElementById("name").textContent =
+user.first_name || "Foydalanuvchi";
+
+
+
+document.getElementById("telegram").textContent =
+user.telegram_id;
+
+
+
+document.getElementById("date").textContent =
+user.created_at;
+
+
+
+const rolesBox =
+document.getElementById("roles");
+
+
+
+if(user.roles){
+
+
+const roles =
+user.roles.split(",");
+
+
+
+rolesBox.innerHTML = roles.map(role => `
+
+<span class="role-badge ${role.trim()}">
+${role.trim()}
+</span>
+
+`).join("");
+
+}
+
+
+
+})
+
+.catch(err => {
+
+console.log("Profile loading error:", err);
+
+});
+
+
+
+</script>
+
+
+</body>
+</html>

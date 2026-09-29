@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="uz">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title id="pageTitle">Femutsu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/watch.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="/" class="logo">
+        <img src="/assets/logo.png" alt="Femutsu logo" class="logo-img">
+        <span class="logo-text">Femutsu</span>
+      </a>
+
+      <nav class="main-nav">
+        <a href="/">Anime</a>
+        <a href="#">Ongoing</a>
+        <a href="#">Bizning jamoa</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="/login" class="btn-signin" id="authButton">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+            <path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <span class="label">Kirish</span>
+        </a>
+        <div class="func_buts">
+          <button class="icon-btn" aria-label="Qidiruv">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+              <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+          <button class="icon-btn" aria-label="Mavzu">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </button>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Меню" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="/">Anime</a>
+      <a href="#">Ongoing</a>
+      <a href="#">Bizning jamoa</a>
+    </nav>
+  </header>
+
+  <main class="watch-page">
+    <div class="wrap">
+
+      <div id="animeLoading" class="watch-loading">Yuklanmoqda...</div>
+
+      <div id="animeContent" class="watch-content" hidden>
+
+        <!-- Player -->
+        <section class="player-section">
+          <div class="player-wrap">
+            <video id="player" class="player" controls playsinline poster="">
+              Brauzeringiz video formatini qo'llab-quvvatlamaydi.
+            </video>
+            <div class="player-empty" id="playerEmpty">Bu qism uchun video hali yuklanmagan</div>
+          </div>
+
+          <div class="episode-bar">
+            <div class="episode-bar-head">
+              <h3>Qismlar</h3>
+              <span class="episode-count" id="episodeCount"></span>
+            </div>
+            <div class="episode-list" id="episodeList"></div>
+          </div>
+        </section>
+
+        <!-- Anime info -->
+        <section class="anime-info-section">
+          <div class="anime-info-top">
+            <div class="anime-poster" id="animePoster"></div>
+
+            <div class="anime-info-main">
+              <p class="anime-title-en" id="animeOriginalName"></p>
+              <h1 class="anime-title-ru" id="animeName"></h1>
+
+              <div class="anime-badges" id="animeBadges"></div>
+
+              <div class="anime-meta-grid" id="animeMetaGrid"></div>
+
+              <p class="anime-description" id="animeDescription"></p>
+
+              <div class="anime-actions">
+                <button class="btn-primary like-btn" id="likeBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span id="likeBtnLabel">Yoqtirish</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Comments -->
+        <section class="comments-section">
+          <div class="box-header">
+            <h2>Izohlar</h2>
+            <span class="comment-count" id="commentCount"></span>
+          </div>
+
+          <div class="comment-form" id="commentForm">
+            <textarea id="commentInput" placeholder="Izoh qoldiring..." rows="3"></textarea>
+            <button class="btn-primary" id="commentSubmit">Yuborish</button>
+          </div>
+          <p class="comment-login-note" id="commentLoginNote" hidden>
+            Izoh qoldirish uchun <a href="/login">tizimga kiring</a>
+          </p>
+
+          <div class="comment-list" id="commentList"></div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-links">
+        <a href="#">Rozilik</a>
+        <a href="#">Конфиденциальность</a>
+        <a href="#">Egalar uchun</a>
+      </div>
+      <p class="footer-note footer-contact">Mualliflik huquqi bilan— <a href="mailto:info@femutsu.me">info@femutsu.me</a></p>
+      <p class="footer-note">© 2026 Femutsu</p>
+    </div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/watch.js"></script>
+
+</body>
+
+</html>
